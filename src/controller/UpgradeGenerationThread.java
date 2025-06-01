@@ -9,8 +9,8 @@ public class UpgradeGenerationThread implements Runnable {
     private GameController controller;
     private volatile boolean running = true;
     private Random random = new Random();
-    private static final long UPGRADE_SPAWN_INTERVAL = 5000;
-    private static final double UPGRADE_SPAWN_CHANCE = 0.25;
+    private static final long UPGRADE_SPAWN_INTERVAL = 2000;
+    private static final double UPGRADE_SPAWN_CHANCE = 0.5;
 
     public UpgradeGenerationThread(GameModel model, GameController controller) {
         this.model = model;

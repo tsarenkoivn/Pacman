@@ -4,7 +4,7 @@ import controller.GameController;
 
 public class ExtraLifeUpgrade extends Upgrade {
     public ExtraLifeUpgrade(int x, int y) {
-        super(x, y, "upgrade_extralife.png");
+        super(x, y, "/upgrade_extralife.png");
     }
 
     @Override

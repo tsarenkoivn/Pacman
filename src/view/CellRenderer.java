@@ -23,7 +23,7 @@ public class CellRenderer extends DefaultTableCellRenderer {
     private Image pacmanOpenUp;
     private Image pacmanOpenDown;
     private Image pacmanClosed;
-    private Image wallImage;
+    private Image wallImage; // This will be loaded via the dummy method for testing
     private Image pelletImage;
     private Image ghostRedImage;
     private Image ghostGrayImage;
@@ -38,13 +38,15 @@ public class CellRenderer extends DefaultTableCellRenderer {
     }
 
     private void loadImages() {
-        // These calls are correct, they pass only the filename
         pacmanOpenRight = ImageLoader.loadImage("pacman_open_right.png");
         pacmanOpenLeft = ImageLoader.loadImage("pacman_open_left.png");
         pacmanOpenUp = ImageLoader.loadImage("pacman_open_up.png");
         pacmanOpenDown = ImageLoader.loadImage("pacman_open_down.png");
         pacmanClosed = ImageLoader.loadImage("pacman_closed.png");
-        wallImage = ImageLoader.loadImage("wall.png");
+
+        // TEMPORARY TEST: Load wall image directly from file system
+        wallImage = ImageLoader.loadImage("wall.png"); // <--- CHANGE HERE
+
         pelletImage = ImageLoader.loadImage("pellet.png");
         ghostRedImage = ImageLoader.loadImage("ghost_red.png");
         ghostGrayImage = ImageLoader.loadImage("ghost_gray.png");
@@ -93,7 +95,6 @@ public class CellRenderer extends DefaultTableCellRenderer {
 
                         for (Upgrade upgrade : gameModel.getActiveUpgrades()) {
                             if (upgrade.getY() == row && upgrade.getX() == column) {
-                                // This call is correct, it relies on upgrade.getIconPath() being just the filename
                                 Image upgradeImage = ImageLoader.loadImage(upgrade.getIconPath());
                                 if (upgradeImage != null) {
                                     int upgradeSize = (int) (Math.min(cellWidth, cellHeight) * 0.7);
