@@ -141,6 +141,7 @@ public class PacmanGameWindow extends JFrame {
         gameFrame.setLocationRelativeTo(null);
 
         GameModel gameModel = new GameModel(rows, columns);
+        // PacmanBoardModel now only has 'rows' for the game grid, not +1
         PacmanBoardModel pacmanBoardModel = new PacmanBoardModel(gameModel);
         PacmanGameBoard pacmanGameBoard = new PacmanGameBoard(pacmanBoardModel, gameFrame);
         CellRenderer cellRenderer = new CellRenderer(gameModel, pacmanGameBoard.getPacmanMoveListener());
@@ -152,7 +153,29 @@ public class PacmanGameWindow extends JFrame {
         gameFrame.add(new JScrollPane(pacmanGameBoard), BorderLayout.CENTER);
         pacmanGameBoard.setupBoard();
 
-        GameController gameController = new GameController(gameModel, pacmanGameBoard, this, cellRenderer);
+        // Create status panel
+        JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 5));
+        statusBar.setBackground(Color.BLACK);
+        JLabel scoreLabel = new JLabel("Score: 0");
+        JLabel livesLabel = new JLabel("Lives: 3");
+        JLabel timeLabel = new JLabel("Time: 0s");
+
+        Font statusFont = new Font("Monospaced", Font.BOLD, 20);
+        scoreLabel.setForeground(Color.WHITE);
+        livesLabel.setForeground(Color.WHITE);
+        timeLabel.setForeground(Color.WHITE);
+        scoreLabel.setFont(statusFont);
+        livesLabel.setFont(statusFont);
+        timeLabel.setFont(statusFont);
+
+        statusBar.add(scoreLabel);
+        statusBar.add(livesLabel);
+        statusBar.add(timeLabel);
+
+        gameFrame.add(statusBar, BorderLayout.SOUTH); // Add status bar to the bottom
+
+        // Pass labels to GameController for updating
+        GameController gameController = new GameController(gameModel, pacmanGameBoard, this, cellRenderer, scoreLabel, livesLabel, timeLabel);
 
         gameFrame.addWindowListener(new WindowAdapter() {
             @Override

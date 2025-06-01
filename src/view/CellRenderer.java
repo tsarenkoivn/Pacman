@@ -23,7 +23,7 @@ public class CellRenderer extends DefaultTableCellRenderer {
     private Image pacmanOpenUp;
     private Image pacmanOpenDown;
     private Image pacmanClosed;
-    private Image wallImage; // This will be loaded via the dummy method for testing
+    private Image wallImage;
     private Image pelletImage;
     private Image ghostRedImage;
     private Image ghostGrayImage;
@@ -43,10 +43,7 @@ public class CellRenderer extends DefaultTableCellRenderer {
         pacmanOpenUp = ImageLoader.loadImage("pacman_open_up.png");
         pacmanOpenDown = ImageLoader.loadImage("pacman_open_down.png");
         pacmanClosed = ImageLoader.loadImage("pacman_closed.png");
-
-        // TEMPORARY TEST: Load wall image directly from file system
-        wallImage = ImageLoader.loadImage("wall.png"); // <--- CHANGE HERE
-
+        wallImage = ImageLoader.loadImage("wall.png");
         pelletImage = ImageLoader.loadImage("pellet.png");
         ghostRedImage = ImageLoader.loadImage("ghost_red.png");
         ghostGrayImage = ImageLoader.loadImage("ghost_gray.png");
@@ -180,32 +177,6 @@ public class CellRenderer extends DefaultTableCellRenderer {
                                 }
                             }
                         }
-                    }
-
-                    if (row == gameModel.getMatrix().length) {
-                        g2d.setColor(Color.WHITE);
-                        g2d.setFont(new Font("Monospaced", Font.BOLD, cellHeight / 3));
-
-                        int livesStartX = (int) (cellWidth * 0.05);
-                        for (int i = 0; i < gameModel.getLives(); i++) {
-                            if (pacmanOpenRight != null) {
-                                g2d.drawImage(pacmanOpenRight, livesStartX + (i * (cellWidth / 2)), (int)(cellHeight * 0.1), cellWidth / 2, cellHeight / 2, this);
-                            } else {
-                                g2d.setColor(Color.YELLOW);
-                                int diameter = (int) (Math.min(cellWidth, cellHeight) * 0.4);
-                                g2d.fillOval(livesStartX + (i * (cellWidth / 2)), (int)(cellHeight * 0.1), diameter, diameter);
-                            }
-                        }
-
-                        String scoreText = "Score: " + gameModel.getScore();
-                        FontMetrics fm = g2d.getFontMetrics();
-                        int scoreTextWidth = fm.stringWidth(scoreText);
-                        int scoreStartX = (cellWidth - scoreTextWidth) / 2;
-                        g2d.drawString(scoreText, scoreStartX, cellHeight - fm.getDescent());
-
-                        String timeText = "Time: " + gameModel.getElapsedTime() + "s";
-                        int timeStartX = cellWidth - fm.stringWidth(timeText) - (int)(cellWidth * 0.05);
-                        g2d.drawString(timeText, timeStartX, cellHeight - fm.getDescent());
                     }
                 }
             }

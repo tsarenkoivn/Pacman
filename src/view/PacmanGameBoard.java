@@ -25,7 +25,9 @@ public class PacmanGameBoard extends JTable {
     }
 
     public void setupBoard() {
-        setRowHeight(parentFrame.getHeight() / (getRowCount() + 1));
+        // Adjusted denominator to account for the removed status row from the table model
+        // The total height should be divided by the actual number of game rows
+        setRowHeight(parentFrame.getHeight() / getRowCount());
         for (int i = 0; i < getColumnCount(); i++) {
             TableColumn column = getColumnModel().getColumn(i);
             column.setPreferredWidth(parentFrame.getWidth() / getColumnCount());
@@ -35,7 +37,7 @@ public class PacmanGameBoard extends JTable {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                setRowHeight(parentFrame.getHeight() / (getRowCount() + 1));
+                setRowHeight(parentFrame.getHeight() / getRowCount());
                 for (int i = 0; i < getColumnCount(); i++) {
                     TableColumn column = getColumnModel().getColumn(i);
                     column.setMinWidth(parentFrame.getWidth() / getColumnCount());

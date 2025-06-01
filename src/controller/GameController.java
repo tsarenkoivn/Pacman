@@ -25,19 +25,27 @@ public class GameController {
     private view.PacmanGameWindow gameWindow;
     private CellRenderer cellRenderer;
 
+    private JLabel scoreLabel;
+    private JLabel livesLabel;
+    private JLabel timeLabel;
+
     private GameLoopThread gameLoopThread;
     private PacmanMovementThread pacmanMovementThread;
     private List<GhostMovementThread> ghostMovementThreads;
     private AnimationThread animationThread;
     private UpgradeGenerationThread upgradeGenerationThread;
+    private StatusUpdateThread statusUpdateThread; // New thread for status updates
 
     private volatile boolean running;
 
-    public GameController(GameModel model, PacmanGameBoard gameBoard, view.PacmanGameWindow gameWindow, CellRenderer cellRenderer) {
+    public GameController(GameModel model, PacmanGameBoard gameBoard, view.PacmanGameWindow gameWindow, CellRenderer cellRenderer, JLabel scoreLabel, JLabel livesLabel, JLabel timeLabel) {
         this.model = model;
         this.gameBoard = gameBoard;
         this.gameWindow = gameWindow;
         this.cellRenderer = cellRenderer;
+        this.scoreLabel = scoreLabel;
+        this.livesLabel = livesLabel;
+        this.timeLabel = timeLabel;
         this.running = false;
         this.ghostMovementThreads = new ArrayList<>();
     }
@@ -61,6 +69,9 @@ public class GameController {
 
         upgradeGenerationThread = new UpgradeGenerationThread(model, this);
         new Thread(upgradeGenerationThread).start();
+
+        statusUpdateThread = new StatusUpdateThread(model, scoreLabel, livesLabel, timeLabel);
+        new Thread(statusUpdateThread).start();
     }
 
     public void stopGame() {
@@ -72,6 +83,7 @@ public class GameController {
         }
         if (animationThread != null) animationThread.stopRunning();
         if (upgradeGenerationThread != null) upgradeGenerationThread.stopRunning();
+        if (statusUpdateThread != null) statusUpdateThread.stopRunning();
 
         try {
             if (gameLoopThread != null) new Thread(gameLoopThread).join(500);
@@ -81,6 +93,7 @@ public class GameController {
             }
             if (animationThread != null) new Thread(animationThread).join(500);
             if (upgradeGenerationThread != null) new Thread(upgradeGenerationThread).join(500);
+            if (statusUpdateThread != null) new Thread(statusUpdateThread).join(500);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             showErrorDialog("Error stopping game threads: " + e.getMessage());
@@ -199,8 +212,8 @@ public class GameController {
                 model.setPacmanInvincibilityEndTime(System.currentTimeMillis() + 7000);
             } else if (upgrade instanceof ExtraLifeUpgrade) {
                 model.addScore(500);
-                if (model.getLives() < 3) { // Cap lives at 3
-                    model.addLife(); // Use the public addLife method
+                if (model.getLives() < 3) {
+                    model.addLife();
                 }
             } else if (upgrade instanceof ScoreMultiplierUpgrade) {
                 model.setScoreMultiplier(2);

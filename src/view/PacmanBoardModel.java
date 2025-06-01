@@ -10,7 +10,7 @@ public class PacmanBoardModel extends AbstractTableModel {
 
     public PacmanBoardModel(GameModel gameModel) {
         this.gameModel = gameModel;
-        this.rows = gameModel.getMatrix().length + 1;
+        this.rows = gameModel.getMatrix().length; // Removed +1 here
         this.columns = gameModel.getMatrix()[0].length;
     }
 
