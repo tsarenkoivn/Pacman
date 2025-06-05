@@ -34,7 +34,7 @@ public class GameController {
     private List<GhostMovementThread> ghostMovementThreads;
     private AnimationThread animationThread;
     private UpgradeGenerationThread upgradeGenerationThread;
-    private StatusUpdateThread statusUpdateThread; // New thread for status updates
+    private StatusUpdateThread statusUpdateThread;
 
     private volatile boolean running;
 
@@ -108,7 +108,6 @@ public class GameController {
             gameWindow.gameWindow(gameWindow.getWidth(), gameWindow.getHeight());
         });
     }
-
     public void handleGameOver() {
         stopGame();
 
@@ -215,6 +214,7 @@ public class GameController {
                 if (model.getLives() < 3) {
                     model.addLife();
                 }
+                SwingUtilities.invokeLater(() -> livesLabel.setText("Lives: " + model.getLives()));
             } else if (upgrade instanceof ScoreMultiplierUpgrade) {
                 model.setScoreMultiplier(2);
                 model.setScoreMultiplierEndTime(System.currentTimeMillis() + 10000);

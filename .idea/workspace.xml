@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6db81b7e-e43f-4f20-8949-503f6692dfe2" name="Changes" comment="score fixed">
+    <list default="true" id="6db81b7e-e43f-4f20-8949-503f6692dfe2" name="Changes" comment="movement fixed, pngs added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/HighScores.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HighScores.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/images/pacman_open_right.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/images/pacman_open_right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/AnimationThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/AnimationThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/PacmanMovementThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/PacmanMovementThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/GameModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/GameModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/PacmanMove.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/PacmanMove.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/PacmanGameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/PacmanGameBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/PacmanGameWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/PacmanGameWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/UpgradeGenerationThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/UpgradeGenerationThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/ImageLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/ImageLoader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +92,7 @@
       <workItem from="1748565473353" duration="1738000" />
       <workItem from="1748792517031" duration="667000" />
       <workItem from="1748811645989" duration="299000" />
-      <workItem from="1749090868311" duration="2472000" />
+      <workItem from="1749090868311" duration="4880000" />
     </task>
     <task id="LOCAL-00001" summary="upgrades fixed">
       <option name="closed" value="true" />
@@ -113,7 +110,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748793019588</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="movement fixed, pngs added">
+      <option name="closed" value="true" />
+      <created>1749093422942</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1749093422942</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -122,6 +127,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="upgrades fixed" />
     <MESSAGE value="score fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="score fixed" />
+    <MESSAGE value="movement fixed, pngs added" />
+    <option name="LAST_COMMIT_MESSAGE" value="movement fixed, pngs added" />
   </component>
 </project>

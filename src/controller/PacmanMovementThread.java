@@ -66,14 +66,11 @@ public class PacmanMovementThread implements Runnable {
                         pacmanMoveListener.setLastSuccessfulDx(moveDx);
                         pacmanMoveListener.setLastSuccessfulDy(moveDy);
 
-                        // Explicitly set both direction components in the model
-                        // This ensures that if Pac-Man is moving vertically, horizontal direction is 0, and vice-versa.
                         model.setPacmanDirectionX(moveDx);
                         model.setPacmanDirectionY(moveDy);
                     } else {
                         pacmanMoveListener.setLastSuccessfulDx(0);
                         pacmanMoveListener.setLastSuccessfulDy(0);
-                        // If Pac-Man hits a wall, stop his visual movement direction too
                         model.setPacmanDirectionX(0);
                         model.setPacmanDirectionY(0);
                     }

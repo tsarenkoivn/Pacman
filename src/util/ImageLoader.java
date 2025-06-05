@@ -7,7 +7,6 @@ import java.util.Map;
 import java.net.URL; // Import URL
 
 public class ImageLoader {
-    // CHANGE THIS LINE: Remove "/resources" from the path
     private static final String IMAGE_PATH_PREFIX = "/images/";
     private static Map<String, Image> imageCache = new HashMap<>();
 
