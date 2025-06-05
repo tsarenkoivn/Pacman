@@ -9,8 +9,8 @@ public class UpgradeGenerationThread implements Runnable {
     private GameController controller;
     private volatile boolean running = true;
     private Random random = new Random();
-    private static final long UPGRADE_SPAWN_INTERVAL = 2000;
-    private static final double UPGRADE_SPAWN_CHANCE = 0.5;
+    private static final long UPGRADE_SPAWN_INTERVAL = 5000;
+    private static final double UPGRADE_SPAWN_CHANCE_PER_GHOST = 0.25;
 
     public UpgradeGenerationThread(GameModel model, GameController controller) {
         this.model = model;
@@ -28,8 +28,12 @@ public class UpgradeGenerationThread implements Runnable {
 
                 Thread.sleep(UPGRADE_SPAWN_INTERVAL);
 
-                if (random.nextDouble() < UPGRADE_SPAWN_CHANCE) {
-                    spawnRandomUpgrade();
+                synchronized (model) {
+                    for (Ghost ghost : model.getGhosts()) {
+                        if (random.nextDouble() < UPGRADE_SPAWN_CHANCE_PER_GHOST) {
+                            attemptSpawnUpgradeAtLocation(ghost.currentX, ghost.currentY);
+                        }
+                    }
                 }
 
             } catch (InterruptedException e) {
@@ -41,48 +45,31 @@ public class UpgradeGenerationThread implements Runnable {
         }
     }
 
-    private void spawnRandomUpgrade() {
-        synchronized (model) {
-            List<int[]> emptyCells = new java.util.ArrayList<>();
-            int[][] matrix = model.getMatrix();
-            for (int r = 0; r < matrix.length; r++) {
-                for (int c = 0; c < matrix[r].length; c++) {
-                    if (matrix[r][c] == 0) {
-                        emptyCells.add(new int[]{r, c});
-                    }
-                }
+    private void attemptSpawnUpgradeAtLocation(int x, int y) {
+        int[][] matrix = model.getMatrix();
+        if (y < 0 || y >= matrix.length || x < 0 || x >= matrix[0].length || matrix[y][x] == 1) {
+            return;
+        }
+
+        for (Upgrade existingUpgrade : model.getActiveUpgrades()) {
+            if (existingUpgrade.getY() == y && existingUpgrade.getX() == x) {
+                return;
             }
+        }
 
-            if (!emptyCells.isEmpty()) {
-                int[] spawnPos = emptyCells.get(random.nextInt(emptyCells.size()));
-                int spawnY = spawnPos[0];
-                int spawnX = spawnPos[1];
+        Upgrade newUpgrade = null;
+        int upgradeType = random.nextInt(5);
 
-                boolean occupiedByUpgrade = false;
-                for (Upgrade existingUpgrade : model.getActiveUpgrades()) {
-                    if (existingUpgrade.getY() == spawnY && existingUpgrade.getX() == spawnX) {
-                        occupiedByUpgrade = true;
-                        break;
-                    }
-                }
+        switch (upgradeType) {
+            case 0: newUpgrade = new SpeedUpgrade(x, y); break;
+            case 1: newUpgrade = new InvincibilityUpgrade(x, y); break;
+            case 2: newUpgrade = new ExtraLifeUpgrade(x, y); break;
+            case 3: newUpgrade = new ScoreMultiplierUpgrade(x, y); break;
+            case 4: newUpgrade = new GhostFreezeUpgrade(x, y); break;
+        }
 
-                if (!occupiedByUpgrade) {
-                    Upgrade newUpgrade = null;
-                    int upgradeType = random.nextInt(5);
-
-                    switch (upgradeType) {
-                        case 0: newUpgrade = new SpeedUpgrade(spawnX, spawnY); break;
-                        case 1: newUpgrade = new InvincibilityUpgrade(spawnX, spawnY); break;
-                        case 2: newUpgrade = new ExtraLifeUpgrade(spawnX, spawnY); break;
-                        case 3: newUpgrade = new ScoreMultiplierUpgrade(spawnX, spawnY); break;
-                        case 4: newUpgrade = new GhostFreezeUpgrade(spawnX, spawnY); break;
-                    }
-
-                    if (newUpgrade != null) {
-                        model.addUpgrade(newUpgrade);
-                    }
-                }
-            }
+        if (newUpgrade != null) {
+            model.addUpgrade(newUpgrade);
         }
     }
 

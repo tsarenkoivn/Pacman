@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6db81b7e-e43f-4f20-8949-503f6692dfe2" name="Changes" comment="movement fixed, pngs added">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="6db81b7e-e43f-4f20-8949-503f6692dfe2" name="Changes" comment="only upgrades fix needed">
       <change beforePath="$PROJECT_DIR$/HighScores.txt" beforeDir="false" afterPath="$PROJECT_DIR$/HighScores.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/PacmanMovementThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/PacmanMovementThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/UpgradeGenerationThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/UpgradeGenerationThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/ImageLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/ImageLoader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,6 +89,7 @@
       <workItem from="1748792517031" duration="667000" />
       <workItem from="1748811645989" duration="299000" />
       <workItem from="1749090868311" duration="4880000" />
+      <workItem from="1749153333979" duration="373000" />
     </task>
     <task id="LOCAL-00001" summary="upgrades fixed">
       <option name="closed" value="true" />
@@ -118,7 +115,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749093422942</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="only upgrades fix needed">
+      <option name="closed" value="true" />
+      <created>1749153557194</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1749153557194</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,6 +133,7 @@
     <MESSAGE value="upgrades fixed" />
     <MESSAGE value="score fixed" />
     <MESSAGE value="movement fixed, pngs added" />
-    <option name="LAST_COMMIT_MESSAGE" value="movement fixed, pngs added" />
+    <MESSAGE value="only upgrades fix needed" />
+    <option name="LAST_COMMIT_MESSAGE" value="only upgrades fix needed" />
   </component>
 </project>
