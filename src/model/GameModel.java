@@ -1,6 +1,7 @@
 package model;
 
 import util.GenerateBoard;
+import util.PacmanMove;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -28,6 +29,8 @@ public class GameModel {
     private int scoreMultiplier = 1;
     private long scoreMultiplierEndTime = 0;
     private long pacmanSpeedBoostEndTime = 0;
+
+    private PacmanMove pacmanMoveListener;
 
     public GameModel(int rows, int columns) {
         this.matrix = new int[rows][columns];
@@ -74,6 +77,10 @@ public class GameModel {
         this.gamePaused = false;
     }
 
+    public void setPacmanMoveListener(PacmanMove listener) {
+        this.pacmanMoveListener = listener;
+    }
+
     public synchronized void resetGameState(boolean resetPellets) {
         if (resetPellets) {
             for (int i = 0; i < matrix.length; i++) {
@@ -89,6 +96,10 @@ public class GameModel {
         findInitialPacmanPosition();
         pacmanDirectionX = 1;
         pacmanDirectionY = 0;
+
+        if (pacmanMoveListener != null) {
+            pacmanMoveListener.resetMovementState();
+        }
 
         for (int i = 0; i < ghosts.length; i++) {
             ghosts[i] = new Ghost(matrix, -1, -1);

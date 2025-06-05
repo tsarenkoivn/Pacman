@@ -40,14 +40,18 @@ public class PacmanMovementThread implements Runnable {
                         break;
                     }
 
-                    int desiredDx = pacmanMoveListener.getX();
-                    int desiredDy = pacmanMoveListener.getY();
+                    int currentDesiredDx = pacmanMoveListener.getDesiredDx();
+                    int currentDesiredDy = pacmanMoveListener.getDesiredDy();
+
+                    int moveDx = (currentDesiredDx != 0 || currentDesiredDy != 0) ? currentDesiredDx : pacmanMoveListener.getLastSuccessfulDx();
+                    int moveDy = (currentDesiredDx != 0 || currentDesiredDy != 0) ? currentDesiredDy : pacmanMoveListener.getLastSuccessfulDy();
 
                     int currentPacmanX = model.getPacmanX();
                     int currentPacmanY = model.getPacmanY();
                     int[][] matrix = model.getMatrix();
-                    int newPacmanX = currentPacmanX + desiredDx;
-                    int newPacmanY = currentPacmanY + desiredDy;
+
+                    int newPacmanX = currentPacmanX + moveDx;
+                    int newPacmanY = currentPacmanY + moveDy;
 
                     if (newPacmanX < 0) {
                         newPacmanX = matrix[0].length - 1;
@@ -55,29 +59,24 @@ public class PacmanMovementThread implements Runnable {
                         newPacmanX = 0;
                     }
 
-                    if (newPacmanY >= 0 && newPacmanY < matrix.length && matrix[newPacmanY][newPacmanX] != 1) {
+                    boolean canMoveToNewPos = (newPacmanY >= 0 && newPacmanY < matrix.length && matrix[newPacmanY][newPacmanX] != 1);
+
+                    if (canMoveToNewPos) {
                         model.setPacmanPosition(newPacmanX, newPacmanY);
-                        if (desiredDx != 0) model.setPacmanDirectionX(desiredDx);
-                        if (desiredDy != 0) model.setPacmanDirectionY(desiredDy);
+                        pacmanMoveListener.setLastSuccessfulDx(moveDx);
+                        pacmanMoveListener.setLastSuccessfulDy(moveDy);
+
+                        // Explicitly set both direction components in the model
+                        // This ensures that if Pac-Man is moving vertically, horizontal direction is 0, and vice-versa.
+                        model.setPacmanDirectionX(moveDx);
+                        model.setPacmanDirectionY(moveDy);
                     } else {
-                        int lastDx = pacmanMoveListener.getXX();
-                        int lastDy = pacmanMoveListener.getYY();
-                        int continuedX = currentPacmanX + lastDx;
-                        int continuedY = currentPacmanY + lastDy;
-
-                        if (continuedX < 0) {
-                            continuedX = matrix[0].length - 1;
-                        } else if (continuedX >= matrix[0].length) {
-                            continuedX = 0;
-                        }
-
-                        if (continuedY >= 0 && continuedY < matrix.length && matrix[continuedY][continuedX] != 1) {
-                            model.setPacmanPosition(continuedX, continuedY);
-                            if (lastDx != 0) model.setPacmanDirectionX(lastDx);
-                            if (lastDy != 0) model.setPacmanDirectionY(lastDy);
-                        }
+                        pacmanMoveListener.setLastSuccessfulDx(0);
+                        pacmanMoveListener.setLastSuccessfulDy(0);
+                        // If Pac-Man hits a wall, stop his visual movement direction too
+                        model.setPacmanDirectionX(0);
+                        model.setPacmanDirectionY(0);
                     }
-                    pacmanMoveListener.resetDesiredMovement();
                 }
                 Thread.sleep(sleepTime);
             } catch (InterruptedException e) {

@@ -26,12 +26,6 @@ public class AnimationThread implements Runnable {
                 }
                 cellRenderer.setMouthOpen(!cellRenderer.mouthOpen);
 
-                // Check and update ghost frozen state for renderer
-                // The CellRenderer will now directly check ghost.isFrozen()
-                // The logic for earliestFreezeEnd and setting cellRenderer.setGhostsFrozen(true, duration)
-                // was redundant because ghost.isFrozen() already handles the time check.
-                // The CellRenderer will simply ask each ghost if it's currently frozen.
-
                 gameBoard.repaint();
                 Thread.sleep(100);
             } catch (InterruptedException e) {

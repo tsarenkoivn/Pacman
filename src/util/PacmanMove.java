@@ -4,10 +4,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class PacmanMove implements KeyListener {
-    private volatile int x = 0;
-    private volatile int y = 0;
-    private volatile int xx = 0;
-    private volatile int yy = 0;
+    private volatile int desiredDx = 0;
+    private volatile int desiredDy = 0;
+
+    private volatile int lastSuccessfulDx = 0;
+    private volatile int lastSuccessfulDy = 0;
+
     private volatile boolean controlPressed = false;
     private volatile boolean shiftPressed = false;
     private volatile boolean qPressed = false;
@@ -22,25 +24,25 @@ public class PacmanMove implements KeyListener {
         int keyCode = e.getKeyCode();
 
         if (keyCode == KeyEvent.VK_UP) {
-            y = -1;
-            x = 0;
-            yy = -1;
-            xx = 0;
+            desiredDy = -1;
+            desiredDx = 0;
+            lastSuccessfulDy = -1;
+            lastSuccessfulDx = 0;
         } else if (keyCode == KeyEvent.VK_DOWN) {
-            y = 1;
-            x = 0;
-            yy = 1;
-            xx = 0;
+            desiredDy = 1;
+            desiredDx = 0;
+            lastSuccessfulDy = 1;
+            lastSuccessfulDx = 0;
         } else if (keyCode == KeyEvent.VK_LEFT) {
-            x = -1;
-            y = 0;
-            yy = -1;
-            xx = 0;
+            desiredDx = -1;
+            desiredDy = 0;
+            lastSuccessfulDx = -1;
+            lastSuccessfulDy = 0;
         } else if (keyCode == KeyEvent.VK_RIGHT) {
-            x = 1;
-            y = 0;
-            yy = 1;
-            xx = 0;
+            desiredDx = 1;
+            desiredDy = 0;
+            lastSuccessfulDy = 1;
+            lastSuccessfulDx = 0;
         } else if (keyCode == KeyEvent.VK_CONTROL) {
             controlPressed = true;
         } else if (keyCode == KeyEvent.VK_SHIFT) {
@@ -62,30 +64,35 @@ public class PacmanMove implements KeyListener {
         }
     }
 
-    public int getX() {
-        return x;
+    public int getDesiredDx() {
+        return desiredDx;
     }
 
-    public int getY() {
-        return y;
+    public int getDesiredDy() {
+        return desiredDy;
     }
 
-    public int getXX() {
-        return xx;
+    public int getLastSuccessfulDx() {
+        return lastSuccessfulDx;
     }
 
-    public int getYY() {
-        return yy;
+    public int getLastSuccessfulDy() {
+        return lastSuccessfulDy;
     }
 
-    public void resetDesiredMovement() {
-        x = 0;
-        y = 0;
+    public void setLastSuccessfulDx(int dx) {
+        this.lastSuccessfulDx = dx;
     }
 
-    public void resetLastMovement() {
-        xx = 0;
-        yy = 0;
+    public void setLastSuccessfulDy(int dy) {
+        this.lastSuccessfulDy = dy;
+    }
+
+    public void resetMovementState() {
+        desiredDx = 0;
+        desiredDy = 0;
+        lastSuccessfulDx = 0;
+        lastSuccessfulDy = 0;
     }
 
     public boolean isStopGameShortcutActive() {
