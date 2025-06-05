@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
-import java.net.URL; // Import URL
+import java.net.URL;
 
 public class ImageLoader {
     private static final String IMAGE_PATH_PREFIX = "/images/";
